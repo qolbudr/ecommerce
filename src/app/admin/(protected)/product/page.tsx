@@ -1,6 +1,7 @@
 'use client';
 
 import { ModalCreateProduct } from "@/module/product/components/ModalCreateProduct";
+import { ModalEditProduct } from "@/module/product/components/ModalEditProduct";
 import { ProductTable } from "@/module/product/components/ProductTable";
 import { Button } from "@/shared/components/Button";
 import { useModalStore } from "@/shared/store/modal.store";
@@ -29,6 +30,7 @@ const AdminUser: React.FC = () => {
             ]}
         />
         <ModalCreateProduct/>
+        <ModalEditProduct/>
     </>
 }
 
