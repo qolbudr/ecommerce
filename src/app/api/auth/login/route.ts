@@ -18,7 +18,7 @@ export async function POST(req: Request) {
 
         const userData = userDoc.data();
 
-        const result: User = { id: user.uid, nama: userData?.name, email: user.email!, telepon: userData?.telepon, status: userData?.status, role: userData?.role, createdAt: userData?.createdAt.toDate() };
+        const result: User = { id: user.uid, nama: userData?.nama, email: user.email!, telepon: userData?.telepon, status: userData?.status, role: userData?.role, createdAt: userData?.createdAt.toDate() };
         const token = signJWTToken(result);
         result.token = token;
 

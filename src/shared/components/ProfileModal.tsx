@@ -27,11 +27,11 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-xs p-5 bg-white rounded-lg shadow-xl border border-gray-200 absolute top-20 right-5"
+        className="w-full max-w-xs pt-5 bg-white rounded-lg shadow-xl border border-gray-200 absolute top-20 right-5"
       >
-        
+
         <div className="flex justify-center mb-4">
-          <div className="w-20 h-20 bg-gray-300 rounded-full" />
+          <img src={`https://ui-avatars.com/api/?name=${userName}`} className="size-20 rounded-full"></img>
         </div>
 
         <p className="text-lg font-bold text-center mb-1">
@@ -44,9 +44,9 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
 
         <button
           onClick={onLogout}
-          className="w-full py-3 text-red-600 font-bold bg-white hover:bg-red-50 transition duration-150 border-t border-gray-200 flex items-center justify-center gap-2"
+          className="w-full py-3 cursor-pointer text-red-600 font-bold bg-white hover:bg-red-50 transition duration-150 border-t border-gray-200 flex items-center justify-center gap-2"
         >
-          <span className="text-xl">&#x23FB;</span> 
+          <span className="text-xl">&#x23FB;</span>
           KELUAR
         </button>
       </div>
