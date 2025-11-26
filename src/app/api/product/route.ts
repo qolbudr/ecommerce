@@ -18,8 +18,7 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-
-    const docRef = await addDoc(collection(db, "products"), {...data});
+    const docRef = await addDoc(collection(db, "products"), {...data, createdAt: new Date()});
     return NextResponse.json({ message: "Product added successfully", data: { ...data } }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ message: "Failed to add product", error: (error as Error).message }, { status: 500 });
