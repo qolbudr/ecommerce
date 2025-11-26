@@ -1,5 +1,5 @@
-import { AdminNavbar } from "@/module/admin/components/Navbar";
-import { AdminSidebar } from "@/module/admin/components/Sidebar";
+import { AdminNavbar } from "@/shared/components/Navbar";
+import { AdminSidebar } from "@/shared/components/Sidebar";
 import { Icon } from "@iconify/react";
 
 export default function ProtectedAdminLayout({ children }: { children: React.ReactNode }) {
