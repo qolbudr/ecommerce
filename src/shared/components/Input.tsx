@@ -12,10 +12,10 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     suffixicon?: string | IconifyIcon;
     isRequired?: boolean;
     withShowHide?: boolean;
-    filled: boolean;
+    filled?: boolean;
 }
 
-export const Input: React.FC<InputProps> = ({error, disabled, prefixicon, suffixicon, isRequired, filled, withShowHide, type, ...props}) => {
+export const Input: React.FC<InputProps> = ({error, disabled, prefixicon, suffixicon, isRequired, filled = false, withShowHide, type, ...props}) => {
     const [show, setShow] = useState(false);
 
     const className = classNames({
