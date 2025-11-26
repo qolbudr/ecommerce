@@ -24,6 +24,8 @@ export const Input: React.FC<InputProps> = ({error, disabled, prefixicon, suffix
         'pl-10': prefixicon,
         'bg-white border border-[#676C73]': !filled,
         'bg-[#F9F9F9]': filled,
+        '!bg-[#F9F9F9] !border-neutral-40': props.readOnly,
+        
     },
         `w-full text-m py-3 px-5 outline-none hover:border-primary transition-colors duration-200`
     )

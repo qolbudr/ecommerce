@@ -12,9 +12,13 @@ import {
 import { User } from "@/shared/types/User";
 import { useUserStore } from "../store/user.store";
 import { Icon } from "@iconify/react";
+import { useModalStore } from "@/shared/store/modal.store";
+import { ModalViewUser } from "./ModalViewUser";
+import { ModalEditUser } from "./ModalEditUser";
 
 export const UserTable: React.FC = () => {
   const store = useUserStore();
+  const modal = useModalStore();
 
   useEffect(() => {
     store.getUsers();
@@ -47,7 +51,7 @@ export const UserTable: React.FC = () => {
         const status = row.original.status;
         return (
           <span
-            className={`px-4 py-1 rounded-full text-white text-sm ${status ? "bg-green-500" : "bg-red-500"
+            className={`px-4 py-1 rounded-full text-white text-sm ${status ? "bg-green-primary" : "bg-red-primary"
               }`}
           >
             {status ? 'AKTIF' : 'TIDAK AKTIF'}
@@ -58,13 +62,13 @@ export const UserTable: React.FC = () => {
     {
       id: "actions",
       header: "Aksi",
-      cell: () => (
+      cell: ({ row }) => (
         <div className="flex gap-3">
-          <button className="text-green-600">
-            <Icon icon="mdi:eye" className="size-5" />
+          <button onClick={() => modal.openModal<User>('view-user', row.original)} className="text-white size-5 flex justify-center items-center rounded-full bg-green-primary cursor-pointer">
+            <Icon icon="mdi:eye" className="size-3" />
           </button>
-          <button className="text-orange-500">
-            <Icon icon="mdi:pencil" className="size-5" />
+          <button onClick={() => modal.openModal<User>('edit-user', row.original)} className="text-white size-5 flex justify-center items-center rounded-full bg-orange-primary cursor-pointer">
+            <Icon icon="mdi:pencil" className="size-3" />
           </button>
         </div>
       ),
@@ -119,6 +123,8 @@ export const UserTable: React.FC = () => {
           ))}
         </tbody>
       </table>
+      <ModalEditUser />
+      <ModalViewUser />
     </div>
   );
 };

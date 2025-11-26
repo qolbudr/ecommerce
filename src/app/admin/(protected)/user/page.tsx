@@ -12,30 +12,9 @@ const AdminUser: React.FC = () => {
     return <>
         <div className="flex justify-between mb-10">
             <h1 className="text-2xl">Dashboard</h1>
-            <Button onClick={() => modal.openModal('edit-user')} variant="primary">Tambah User</Button>
+            <Button onClick={() => modal.openModal('add-user')} variant="primary">Tambah User</Button>
         </div>
-        <UserTable
-            data={[
-                {
-                    id: "ini-id",
-                    nama: "Abid",
-                    email: "abid@example.com",
-                    telepon: "08123456789",
-                    status: "AKTIF",
-                    password: "password123",
-                    role: "ADMIN"
-                },
-                {
-                    id: "ini-id",
-                    nama: "Abid",
-                    email: "abid@example.com",
-                    telepon: "08123456789",
-                    status: "AKTIF",
-                    password: "password123",
-                    role: "ADMIN"
-                }
-            ]}
-        />
+        <UserTable/>
         <ModalCreateUser />
         <ModalEditUser />
     </>
