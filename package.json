@@ -12,6 +12,8 @@
     "@iconify/react": "^6.0.2",
     "@tanstack/react-table": "^8.21.3",
     "classnames": "^2.5.1",
+    "firebase": "^12.6.0",
+    "jose": "^6.1.2",
     "next": "16.0.4",
     "react": "19.2.0",
     "react-dom": "19.2.0",
