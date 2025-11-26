@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 
-const SECRET_KEY = process.env.NEXT_PUBLIC_JWT_SECRET;
+const SECRET_KEY = process.env.JWT_SECRET;
 
 export async function handleApiMiddleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;

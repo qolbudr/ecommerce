@@ -3,7 +3,9 @@ export interface User {
   nama: string;
   email: string;
   telepon: string;
-  status: "AKTIF" | "TIDAK AKTIF";
-  password: string;
+  status: boolean;
+  password?: string;
+  token?: string;
+  createdAt: Date;
   role: "ADMIN" | "USER";
 };
