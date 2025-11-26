@@ -19,6 +19,7 @@ import { ModalEditUser } from "./ModalEditUser";
 export const UserTable: React.FC = () => {
   const store = useUserStore();
   const modal = useModalStore();
+  const [selectedUser, setSelectedUser] = React.useState<User | null>(null);
 
   useEffect(() => {
     store.getUsers();
@@ -64,10 +65,10 @@ export const UserTable: React.FC = () => {
       header: "Aksi",
       cell: ({ row }) => (
         <div className="flex gap-3">
-          <button onClick={() => modal.openModal<User>('view-user', row.original)} className="text-white size-5 flex justify-center items-center rounded-full bg-green-primary cursor-pointer">
+          <button onClick={() => { modal.openModal('view-user', row.original); }} className="text-white size-5 flex justify-center items-center rounded-full bg-green-primary cursor-pointer">
             <Icon icon="mdi:eye" className="size-3" />
           </button>
-          <button onClick={() => modal.openModal<User>('edit-user', row.original)} className="text-white size-5 flex justify-center items-center rounded-full bg-orange-primary cursor-pointer">
+          <button onClick={() => { modal.openModal('edit-user', row.original); }} className="text-white size-5 flex justify-center items-center rounded-full bg-orange-primary cursor-pointer">
             <Icon icon="mdi:pencil" className="size-3" />
           </button>
         </div>
@@ -123,8 +124,6 @@ export const UserTable: React.FC = () => {
           ))}
         </tbody>
       </table>
-      <ModalEditUser />
-      <ModalViewUser />
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { User } from "@/shared/types/User";
 
 export const ModalViewUser = () => {
   const modal = useModalStore();
-  const data = modal.modalData as User | undefined;
+  const user = modal.modalData as User | undefined;
 
   return (
     <Modal
@@ -18,16 +18,16 @@ export const ModalViewUser = () => {
     >
       <form className="space-y-4 p-8 font-poppins">
         <div className="relative">
-          <Input label="Nama" placeholder="Masukkan nama lengkap" defaultValue={data?.nama} readOnly />
+          <Input label="Nama" placeholder="Masukkan nama lengkap" defaultValue={user?.nama} readOnly />
           <span
-            className={`px-4 py-1 absolute top-1/2 right-5 rounded-full text-white text-sm ${data?.status ? "bg-green-primary" : "bg-red-primary"
+            className={`px-4 py-1 absolute top-1/2 right-5 rounded-full text-white text-sm ${user?.status ? "bg-green-primary" : "bg-red-primary"
               }`}
           >
-            {data?.status ? 'AKTIF' : 'TIDAK AKTIF'}
+            {user?.status ? 'AKTIF' : 'TIDAK AKTIF'}
           </span>
         </div>
-        <Input label="Nomor Telepon " placeholder="Masukkan nomor telepon" type="tel" defaultValue={data?.telepon} readOnly />
-        <Input label="Email" placeholder="Masukkan email" type="email" defaultValue={data?.email} readOnly />
+        <Input label="Nomor Telepon " placeholder="Masukkan nomor telepon" type="tel" defaultValue={user?.telepon} readOnly />
+        <Input label="Email" placeholder="Masukkan email" type="email" defaultValue={user?.email} readOnly />
 
       </form>
     </Modal>

@@ -10,6 +10,7 @@ interface UserState {
     users: User[],
     getUsers: () => Promise<void>
     addUser: (data: Partial<User>) => Promise<void>
+    updateUser: (id: string, data: Partial<User>) => Promise<void>
 }
 
 export const useUserStore = create<UserState>()(
@@ -30,6 +31,16 @@ export const useUserStore = create<UserState>()(
                 set({ status: BaseStatus.loading() });
                 const newUser = await authService.register(data.nama!, data.email!, data.telepon!);
                 set({ status: BaseStatus.success('User added successfully') });
+                get().getUsers();
+            } catch (error) {
+                set({ status: BaseStatus.error((error as Error).message) });
+            }
+        },
+        updateUser: async (id: string, data: Partial<User>) => {
+            try {
+                set({ status: BaseStatus.loading() });
+                await userService.update(id, data);
+                set({ status: BaseStatus.success('User updated successfully') });
                 get().getUsers();
             } catch (error) {
                 set({ status: BaseStatus.error((error as Error).message) });

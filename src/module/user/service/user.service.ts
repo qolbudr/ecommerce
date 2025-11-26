@@ -10,5 +10,11 @@ const list = async (nama?: string): Promise<User[]> => {
     return body.data;
 };
 
-export default { list };
+const update = async (id: string, data: Partial<User>): Promise<User> => {
+    const response = await apiClient.post<BaseResponse<User>>(`/user/${id}`, data);
+    const body = response.data;
+    return body.data;
+};
+
+export default { list, update };
 
