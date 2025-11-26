@@ -18,10 +18,9 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-    const newProduct = Product.parse(data);
 
-    const docRef = await addDoc(collection(db, "products"), {...newProduct});
-    return NextResponse.json({ message: "Product added successfully", data: { id: docRef.id, ...newProduct } }, { status: 201 });
+    const docRef = await addDoc(collection(db, "products"), {...data});
+    return NextResponse.json({ message: "Product added successfully", data: { ...data } }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ message: "Failed to add product", error: (error as Error).message }, { status: 500 });
   }

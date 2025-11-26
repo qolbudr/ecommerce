@@ -3,30 +3,42 @@
 import React, { useRef, useState } from "react";
 
 interface ImageUploadProps {
-    onChange?: (file: File | null) => void;
+    onChange?: (file: string | null) => void;
     validateRatio?: boolean;
+    value?: string;
 }
 
-export const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, validateRatio = false }) => {
+export const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, validateRatio = false, value }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [preview, setPreview] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
+
+    const fileToBase64 = (file: File): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = error => reject(error);
+        });
+    };
 
     const handleSelectImage = () => {
         fileInputRef.current?.click();
     };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
         const img = new Image();
         const url = URL.createObjectURL(file);
+        const base64 = await fileToBase64(file);
 
         if (!validateRatio) {
             setPreview(url);
             setError(null);
-            onChange?.(file);
+            onChange?.(base64);
             return;
         }
 
@@ -43,7 +55,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, validateRati
             } else {
                 setError(null);
                 setPreview(url);
-                onChange?.(file);
+                onChange?.(base64);
             }
         };
     };
@@ -56,13 +68,26 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, validateRati
             >
                 {!preview ? (
                     <>
-                        <div className="flex flex-col items-center gap-3">
-                            <img src="/images/misc/upload-image.png" alt="upload" className="w-auto" />
+                        {
+                            value && (
+                                <div className="w-full flex justify-center mb-3">
+                                    <img
+                                        src={value}
+                                        alt="preview"
+                                        className="max-h-[150px] object-contain"
+                                    />
+                                </div>
+                            )
+                        }
+                        {!value && (
+                            <div className="flex flex-col items-center gap-3">
+                                <img src="/images/misc/upload-image.png" alt="upload" className="w-auto" />
 
-                            <p className="text-gray-500 text-m">
-                                Pilih gambar dengan ratio 9:16
-                            </p>
-                        </div>
+                                <p className="text-gray-500 text-m">
+                                    Pilih gambar dengan ratio 9:16
+                                </p>
+                            </div>
+                        )}
                     </>
                 ) : (
                     <div className="w-full flex justify-center">

@@ -1,6 +1,6 @@
 'use client';
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ColumnDef,
   flexRender,
@@ -10,13 +10,18 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { Product } from "@/shared/types/Product";
+import { useProductStore } from "../store/product.store";
+import { Icon } from "@iconify/react";
+import { useModalStore } from "@/shared/store/modal.store";
 
-type Props = {
-  data: Product[];
-};
-
-export const ProductTable: React.FC<Props> = ({ data }) => {
+export const ProductTable: React.FC = () => {
+  const store = useProductStore();
+  const modal = useModalStore();
   const [sorting, setSorting] = React.useState<SortingState>([]);
+
+  useEffect(() => {
+    store.getProduct();
+  }, [])
 
   const columns: ColumnDef<Product>[] = [
     {
@@ -52,15 +57,30 @@ export const ProductTable: React.FC<Props> = ({ data }) => {
       ),
     },
     {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => {
+        const status = row.original.status;
+        return (
+          <span
+            className={`px-4 py-1 rounded-full text-white text-sm ${status ? "bg-green-primary" : "bg-red-primary"
+              }`}
+          >
+            {status ? 'AKTIF' : 'TIDAK AKTIF'}
+          </span>
+        );
+      },
+    },
+    {
       id: "actions",
       header: "Aksi",
       cell: ({ row }) => (
         <div className="flex gap-3">
-          <button className="text-green-600">
-            {/* <Eye size={20} /> */}
+          <button onClick={() => { modal.openModal('edit-product', row.original); }} className="text-white size-5 flex justify-center items-center rounded-full bg-orange-primary cursor-pointer">
+            <Icon icon="mdi:pencil" className="size-3" />
           </button>
-          <button className="text-orange-500">
-            {/* <Pencil size={20} /> */}
+          <button onClick={() => { modal.openModal('delete-product', row.original); }} className="text-white size-5 flex justify-center items-center rounded-full bg-red-primary cursor-pointer">
+            <Icon icon="mdi:trash" className="size-3" />
           </button>
         </div>
       ),
@@ -68,7 +88,7 @@ export const ProductTable: React.FC<Props> = ({ data }) => {
   ];
 
   const table = useReactTable({
-    data,
+    data: store.products,
     columns,
     state: { sorting },
     onSortingChange: setSorting,
