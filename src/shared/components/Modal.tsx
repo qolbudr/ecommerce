@@ -1,3 +1,5 @@
+'use client';
+
 import { Icon } from "@iconify/react";
 import React, { useEffect, useState } from "react";
 import { Button } from "./Button";
@@ -19,7 +21,7 @@ export const Modal = (props: ModalProps) => {
     if (modal.isOpen(props.identifier)) {
       setShow(true);
     } else {
-      const timer = setTimeout(() => setShow(false), 200); // wait for animation
+      const timer = setTimeout(() => setShow(false), 200);
       return () => clearTimeout(timer);
     }
   }, [modal.isOpen(props.identifier)]);
