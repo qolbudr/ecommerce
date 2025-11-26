@@ -6,7 +6,7 @@ import { RadioSelector } from "@/shared/components/RadioSelector";
 import { User } from "@/shared/types/User";
 import { useUserStore } from "../store/user.store";
 import { useForm } from "react-hook-form";
-import { UserUpdateFormValues, userUpdateSchema } from "../schema/update.schema";
+import { UserUpdateFormValues, userSchema } from "../schema/user.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
@@ -17,7 +17,7 @@ export const ModalEditUser = () => {
   const user = modal.modalData as User | undefined;
 
   const { register, handleSubmit, watch, setValue, reset, formState: { errors } } = useForm<UserUpdateFormValues>({
-    resolver: zodResolver(userUpdateSchema),
+    resolver: zodResolver(userSchema),
     mode: "onChange",
     reValidateMode: "onBlur",
     defaultValues: {
