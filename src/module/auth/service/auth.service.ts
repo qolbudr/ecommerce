@@ -5,9 +5,15 @@ import { BaseResponse } from "@/shared/types/BaseResponse";
 import { AxiosError } from "axios";
 
 const register = async (nama: string, email: string, telepon: string): Promise<User> => {
-    const response = await apiClient.post<BaseResponse<User>>('/auth/register', { nama, email, telepon });
-    const body = response.data;
-    return body.data;
+    try {
+        const response = await apiClient.post<BaseResponse<User>>('/auth/register', { nama, email, telepon });
+        const body = response.data;
+        return body.data;
+    } catch (error) {
+        console.log(error);
+        if (error instanceof AxiosError) throw new Error(error.response?.data.error || 'Login failed');
+        throw new Error('An unexpected error occurred');
+    }
 };
 
 const login = async (email: string, password: string): Promise<User> => {
@@ -23,9 +29,16 @@ const login = async (email: string, password: string): Promise<User> => {
 };
 
 const logOut = async (): Promise<void> => {
-    const response = await apiClient.get<BaseResponse<void>>('/auth/logout');
-    const body = response.data;
-    return body.data;
+    try {
+        const response = await apiClient.get<BaseResponse<void>>('/auth/logout');
+        const body = response.data;
+        return body.data;
+    } catch (error) {
+        console.log(error);
+        if (error instanceof AxiosError) throw new Error(error.response?.data.error || 'Logout failed');
+        throw new Error('An unexpected error occurred');
+    }
+
 };
 
 export default { register, login, logOut };

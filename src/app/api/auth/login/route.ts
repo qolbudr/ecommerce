@@ -13,6 +13,9 @@ export async function POST(req: Request) {
         const user = userCredential.user;
 
         const userDoc = await getDoc(doc(db, "users", user.uid));
+
+        if (!userDoc.exists()) return NextResponse.json({ message: "Login failed", error: "User data not found" }, { status: 404 });
+
         const userData = userDoc.data();
 
         const result: User = { id: user.uid, nama: userData?.name, email: user.email!, telepon: userData?.telepon, status: userData?.status, role: userData?.role, createdAt: userData?.createdAt.toDate() };

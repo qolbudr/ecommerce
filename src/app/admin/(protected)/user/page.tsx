@@ -1,6 +1,7 @@
 'use client';
 
 import { ModalCreateUser } from "@/module/user/components/ModalCreateUser";
+import { ModalDeleteUser } from "@/module/user/components/ModalDeleteUser";
 import { ModalEditUser } from "@/module/user/components/ModalEditUser";
 import { ModalViewUser } from "@/module/user/components/ModalViewUser";
 import { UserTable } from "@/module/user/components/UserTable";
@@ -19,6 +20,7 @@ const AdminUser: React.FC = () => {
         <ModalCreateUser />
         <ModalViewUser />
         <ModalEditUser />
+        <ModalDeleteUser />
     </>
 }
 

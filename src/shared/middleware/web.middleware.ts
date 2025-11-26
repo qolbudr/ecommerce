@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
+import path from "path";
 
 const SECRET_KEY = process.env.JWT_SECRET;
 
@@ -12,7 +13,7 @@ export async function handleWebMiddleware(req: NextRequest) {
 
   console.log(pathname);
 
-  if (!token && pathname.startsWith("/admin/dashboard")) {
+  if (!token && (pathname.includes("/admin") && !pathname.includes("/admin/login"))) {
     return NextResponse.redirect(new URL("/admin/login", req.url));
   }
 

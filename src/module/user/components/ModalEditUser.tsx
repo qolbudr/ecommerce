@@ -43,8 +43,13 @@ export const ModalEditUser = () => {
     const result = await store.updateUser(user!.id, data);
     if (store.status.isError) return toast.error(store.status.message!);
     reset();
-    toast.success(store.status.message!);
+    toast.success('User has been updated successfully');
     modal.closeModal('edit-user');
+  }
+
+  const onDelete = () => {
+    modal.closeModal('edit-user');
+    modal.openModal('delete-user', user)
   }
 
 
@@ -53,7 +58,7 @@ export const ModalEditUser = () => {
       identifier="edit-user"
       title="Ubah User"
       cta={[
-        <Button variant="outline">Hapus</Button>,
+        <Button onClick={onDelete} variant="outline">Hapus</Button>,
         <Button loading={store.status.isLoading} onClick={handleSubmit(updateUser)}>Simpan</Button>
       ]}
     >

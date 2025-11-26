@@ -20,9 +20,9 @@ export const ModalCreateUser = () => {
 
   const addUser = async (data: RegisterFormValues) => {
     const result = await store.addUser(data);
-    if (store.status.isError) return toast.error(store.status.message!);
+    if (result.status.isError) return toast.error(result.status.message!);
     reset();
-    toast.success(store.status.message!);
+    toast.success('User has been created successfully');
     modal.closeModal('add-user');
   }
 
