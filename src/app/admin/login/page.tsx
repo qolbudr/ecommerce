@@ -4,7 +4,7 @@ import { Input } from "@/shared/components/Input";
 const AdminLogin: React.FC = () => {
     return <>
         <div className="h-screen items-center justify-center flex ">
-            <div className="w-1/2 h-full m-0 relative">
+            <div className="hidden xl:block w-1/2 h-full m-0 relative">
                 <img src="/images/misc/side-login.png" alt="Login Illustration" className="w-full h-full object-cover" />
                 <div className="absolute inset-0">
                     <div className="flex items-center w-full h-full justify-center">
