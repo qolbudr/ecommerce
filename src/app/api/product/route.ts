@@ -7,7 +7,14 @@ export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const search = searchParams.get("search") || "";
-    const productCollection = await getDocs(query(collection(db, "products")));
+    const active = searchParams.get("active") || "";
+    let productCollection;
+    if (active) {
+      const q = query(collection(db, "products"), where("status", "==", active === "true"));
+      productCollection = await getDocs(q);
+    } else {
+      productCollection = await getDocs(collection(db, "products"));
+    }
     const products: Product[] = productCollection.docs.map(doc => Product.parse({ id: doc.id, ...doc.data() })).filter(product => product.nama.toLowerCase().includes(search.toLowerCase()));
     return NextResponse.json({ message: "Products fetched successfully", data: products }, { status: 200 });
   } catch (error) {

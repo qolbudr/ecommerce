@@ -17,9 +17,9 @@ const add = async (data: Partial<Product>): Promise<Product> => {
     }
 }
 
-const list = async (nama?: string): Promise<Product[]> => {
+const list = async (nama?: string, active?: boolean): Promise<Product[]> => {
     try {
-        const response = await apiClient.get<BaseResponse<Product[]>>('/product?search=' + (nama || ''));
+        const response = await apiClient.get<BaseResponse<Product[]>>('/product?search=' + (nama || '') + '&active=' + (active !== undefined ? active : ''));
         const body = response.data;
         return body.data;
     } catch (error) {
