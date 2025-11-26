@@ -1,7 +1,9 @@
 export interface User {
-  no: number;
+  id: string;
   nama: string;
   email: string;
   telepon: string;
   status: "AKTIF" | "TIDAK AKTIF";
+  password: string;
+  role: "ADMIN" | "USER";
 };
