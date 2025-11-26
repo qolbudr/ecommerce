@@ -23,7 +23,7 @@ const UserRegister: React.FC = () => {
         const result = await store.register(data);
         if (result.status.isError) return toast.error(result.status.message!);
         reset();
-        toast.success(result.status.message!);
+        toast.success('Successfully registered user, the credentials have been sent to your email');
     }
 
     return <>
