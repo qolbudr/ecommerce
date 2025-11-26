@@ -10,24 +10,26 @@ interface AuthState {
   status: BaseStatus,
   user: User | null
   setUser: (user: User) => void,
-  login: (data: LoginFormValues) => Promise<User | undefined>,
+  login: (data: LoginFormValues) => Promise<AuthState>,
   logout: () => Promise<void>
-  register: (data: RegisterFormValues) => Promise<void>
+  register: (data: RegisterFormValues) => Promise<AuthState>
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       status: BaseStatus.initial(),
       user: null,
       login: async (data) => {
         try {
           set({ status: BaseStatus.loading() });
           const user = await authService.login(data.email, data.password);
-          set({ user, status: BaseStatus.success('Login successful') });
-          return user;
+          const status = BaseStatus.success('Login successful')
+          set({ user, status: status });
+          return get();
         } catch (error) {
           set({ status: BaseStatus.error((error as Error).message) });
+          return get();
         }
       },
       setUser: (user) => set({ user }),
@@ -39,10 +41,12 @@ export const useAuthStore = create<AuthState>()(
         try {
           set({ status: BaseStatus.loading() });
           const user = await authService.register(data.nama, data.email, data.telepon);
-          set({ user, status: BaseStatus.success('Registration successful check credentials in your email') });
-          return;
+          const status = BaseStatus.success('Registration successful check credentials in your email')
+          set({ user, status: status });
+          return get();
         } catch (error) {
           set({ status: BaseStatus.error((error as Error).message) });
+          return get();
         }
       }
     }),

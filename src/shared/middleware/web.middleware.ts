@@ -10,6 +10,8 @@ export async function handleWebMiddleware(req: NextRequest) {
 
   const publicPaths = ["/admin/login", "/user/login"];
 
+  console.log(pathname);
+
   if (!token && pathname.startsWith("/admin/dashboard")) {
     return NextResponse.redirect(new URL("/admin/login", req.url));
   }
@@ -19,12 +21,12 @@ export async function handleWebMiddleware(req: NextRequest) {
       const user = await jwtVerify(token, new TextEncoder().encode(SECRET_KEY!));
 
       if (publicPaths.includes(pathname)) {
-        if(user.payload.role === "admin") {
+        if(user.payload.role === "ADMIN") {
           return NextResponse.redirect(new URL("/admin/dashboard", req.url));
         }
       }
 
-      if (req.url.includes("/admin") && user.payload.role !== "admin") {
+      if (req.url.includes("/admin") && user.payload.role !== "ADMIN") {
         return NextResponse.redirect(new URL("/", req.url));
       }
 

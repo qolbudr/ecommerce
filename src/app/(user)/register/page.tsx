@@ -20,10 +20,10 @@ const UserRegister: React.FC = () => {
     });
 
     const signup = async (data: RegisterFormValues) => {
-        await store.register(data);
-        if (store.status.isError) return toast.error(store.status.message!);
+        const result = await store.register(data);
+        if (result.status.isError) return toast.error(result.status.message!);
         reset();
-        toast.success(store.status.message!);
+        toast.success(result.status.message!);
     }
 
     return <>

@@ -20,11 +20,11 @@ const UserLogin: React.FC = () => {
     });
 
     const login = async (data: LoginFormValues) => {
-        const user = await store.login(data);
-        if (store.status.isError) return toast.error(store.status.message!);
-        if (user?.role === 'ADMIN') return router.replace('/admin/dashboard');
+        const result = await store.login(data);
+        if (result.status.isError) return toast.error(result.status.message!);
+        if (result?.user?.role === 'ADMIN') return router.replace('/admin/dashboard');
         router.replace('/');
-        toast.success(store.status.message!);
+        toast.success('Login successful');
     }
 
     return <>
@@ -36,7 +36,7 @@ const UserLogin: React.FC = () => {
                         <p className="text-xs text-secondary">Silahkan masukkan email atau nomor telepon dan password Anda untuk mulai menggunakan aplikasi</p>
                         <form onSubmit={handleSubmit(login)} className="space-y-3 mt-8">
                             <Input label="Email / Nomor Telpon" type="text" placeholder="Contoh: user@gmail.com" {...register('email')} error={errors.email?.message} />
-                            <Input label="Password" type="password" placeholder="Masukkan password" {...register('password')} error={errors.password?.message} />
+                            <Input withShowHide={true} label="Password" type="password" placeholder="Masukkan password" {...register('password')} error={errors.password?.message} />
                             <Button loading={store.status.isLoading} fullWidth className="mt-8" type="submit">Masuk</Button>
                         </form>
                     </div>
