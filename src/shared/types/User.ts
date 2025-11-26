@@ -20,7 +20,7 @@ export namespace User {
       status: Boolean(data.status ?? false),
       password: data.password ? String(data.password) : undefined,
       token: data.token ? String(data.token) : undefined,
-      createdAt: data.createdAt ? new Date(data.createdAt) : new Date(),
+      createdAt: data.createdAt ? data.createdAt.toDate() : new Date(),
       role: data.role === 'ADMIN' ? 'ADMIN' : 'USER',
     };
   }

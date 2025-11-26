@@ -15,7 +15,7 @@ export namespace Product {
       gambar: String(data.gambar ?? ''),
       harga: Number(data.harga ?? 0),
       status: Boolean(data.status ?? false),
-      createdAt: data.createdAt ? new Date(data.createdAt) : undefined,
+      createdAt: data.createdAt ? data.createdAt.toDate() : new Date(),
     };
   }
 }

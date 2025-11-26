@@ -1,16 +1,9 @@
+import { Product } from "@/shared/types/Product";
 import React from "react";
-
-interface ProductItem {
-    id: number;
-    name: string;
-    image: string;
-    date: string;
-    price: string;
-}
 
 interface ProductTableProps {
     title?: string;
-    data: ProductItem[];
+    data: Product[];
 }
 
 const ProductTable: React.FC<ProductTableProps> = ({ title = "Produk Terbaru", data }) => {
@@ -28,11 +21,18 @@ const ProductTable: React.FC<ProductTableProps> = ({ title = "Produk Terbaru", d
                         className="grid grid-cols-3 items-center py-4 px-4"
                     >
                         <div className="flex items-center gap-3">
-                            <span className="text-[#1A2850]">{item.name}</span>
+                            <span className="text-[#1A2850]">{item.nama}</span>
                         </div>
-                        <div className="text-center text-gray-500">{item.date}</div>
+                        <div className="text-center text-gray-500">{new Date(item.createdAt!).toLocaleDateString("id-ID", {
+                            day: "2-digit",
+                            month: "long",
+                            year: "numeric",
+                        })}</div>
 
-                        <div className="text-right font-medium text-[#1A2850]">{item.price}</div>
+                        <div className="text-right font-medium text-[#1A2850]">{item.harga.toLocaleString("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                        })}</div>
                     </div>
                 ))}
             </div>

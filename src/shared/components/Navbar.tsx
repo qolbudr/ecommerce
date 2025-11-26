@@ -11,6 +11,7 @@ export const AdminNavbar: React.FC = () => {
     const router = useRouter();
 
     const logoutHandler = async () => {
+        setIsModalOpen(false);
         await store.logout();
         router.replace("/admin/login");
     }
