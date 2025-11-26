@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Vascomm — E-commerce Demo (Next.js + TypeScript)
 
-First, run the development server:
+Vascomm adalah aplikasi e-commerce demonstrasi yang dibuat dengan Next.js (App Router) dan TypeScript. Aplikasi ini menyertakan fitur otentikasi (Firebase Auth), panel admin untuk manajemen produk dan pengguna, dashboard ringkasan, serta API route untuk operasi CRUD produk dan pengguna.
+
+**Fitur utama**
+- Autentikasi pengguna (register, login, logout) menggunakan Firebase Auth
+- Panel admin dilindungi untuk manajemen produk & pengguna
+- API route untuk produk, pengguna, dan ringkasan dashboard
+- Upload gambar, slider produk, dan tampilan produk publik
+- Email notifikasi pendaftaran (melalui Nodemailer)
+
+**Tech stack**
+- Next.js (App Router)
+- React + TypeScript
+- Tailwind / PostCSS
+- Firebase (Auth + Firestore)
+- Zod (validasi)
+- Zustand (state management)
+- Axios (HTTP client)
+- JWT untuk token sisi-server
+- Nodemailer untuk pengiriman email
+
+## Daftar Perintah (Scripts)
+
+Jalankan perintah di root proyek:
+
+```bash
+npm install
+npm run dev      # jalankan development server
+npm run build    # build untuk produksi
+npm run start    # jalankan hasil build
+npm run lint     # jalankan linter
+```
+
+## Prasyarat
+- Node.js (disarankan v18+)
+- Akun Firebase (Authentication + Firestore)
+- Akun Gmail dengan App Password (atau SMTP provider lain) untuk pengiriman email
+
+## Variabel Lingkungan
+Buat file `.env` di root (atau atur pada platform deploy) dengan variabel berikut. Contoh ada di `.env.example`.
+
+- `NEXT_PUBLIC_FIREBASE_API_KEY`
+- `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+- `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+- `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+- `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+- `NEXT_PUBLIC_FIREBASE_APP_ID`
+- `NEXT_PUBLIC_API_BASE_URL` (opsional — default `http://localhost:3000/api`)
+- `JWT_SECRET`
+- `GMAIL_USER`
+- `GMAIL_APP_PASSWORD`
+
+## Setup Firebase singkat
+1. Buat project di Firebase Console.
+2. Aktifkan Authentication (Email/Password).
+3. Buat Firestore database (mode pengembangan untuk pengujian).
+4. Salin konfigurasi Firebase dan set variabel `NEXT_PUBLIC_FIREBASE_*` di `.env`.
+
+## Menjalankan secara lokal
+
+1. Install dependensi:
+
+```bash
+npm install
+```
+
+2. Buat file `.env` berdasarkan `.env.example` dan isi nilai yang diperlukan.
+
+3. Jalankan development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Buka http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Ringkasan API Endpoints
+Berikut ringkasan endpoint yang tersedia di `src/app/api`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `POST /api/auth/login` — autentikasi pengguna, set httpOnly cookie `token`.
+- `POST /api/auth/register` — registrasi pengguna (mengirim password via email).
+- `GET  /api/auth/logout` — logout (hapus cookie `token`).
+- `GET  /api/dashboard/summary` — ambil ringkasan untuk dashboard (jumlah pengguna, produk, dll).
+- `GET  /api/product` — daftar produk (filter via query params).
+- `POST /api/product` — buat produk baru.
+- `POST /api/product/[id]` — update produk.
+- `DELETE /api/product/[id]` — hapus produk.
+- `GET  /api/user` — daftar pengguna.
+- `POST /api/user/[id]` — update pengguna.
+- `DELETE /api/user/[id]` — hapus pengguna.
 
-## Learn More
+Catatan: Lihat kode di `src/app/api/*` untuk detail body request dan contoh response.
 
-To learn more about Next.js, take a look at the following resources:
+## Struktur Proyek (singkat)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `src/app` — routes dan layout Next.js (App Router)
+- `src/module` — fitur modular: `auth`, `dashboard`, `home`, `product`, `user`
+- `src/shared` — komponen bersama, util, middleware, dan konfigurasi Firebase/JWT/mailer
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Contoh file penting:
+- `src/shared/lib/firebase.ts` — inisialisasi Firebase
+- `src/shared/lib/jwt.ts` — helper sign/verify JWT
+- `src/shared/lib/mailer.ts` — konfigurasi Nodemailer
+- `src/app/api` — route handlers untuk API server
 
-## Deploy on Vercel
+## Deployment
+- Direkomendasikan deploy ke Vercel (Next.js). Pastikan semua env vars diset di pengaturan project Vercel.
+- Untuk produksi: set cookie `secure` (HTTPS), atur `JWT_SECRET` kuat, dan gunakan provider email yang sesuai (SendGrid, SES, dll.) jika Gmail tidak memadai.
+- Pastikan aturan Firestore diatur dengan benar untuk produksi.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Troubleshooting
+- Tidak ada test otomatis dalam repo ini.
+- Jika mengalami masalah pengiriman email dengan Gmail, gunakan App Password atau pakai provider SMTP lain.
+- Jika ada masalah auth, periksa konfigurasi `NEXT_PUBLIC_FIREBASE_*` dan rules Firestore.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Kontribusi
+Pull request dan issues diterima. Sertakan penjelasan singkat dan langkah reproduksi untuk bug.
+
