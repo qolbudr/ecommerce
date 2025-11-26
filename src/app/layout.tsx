@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Playfair_Display } from "next/font/google";
+import { Poppins } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
 };
 
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-poppins" });
 
 export default function RootLayout({
   children,
@@ -17,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${playfair.variable} antialiased`}
+        className={`${playfair.variable} ${poppins.variable} antialiased`}
       >
         {children}
       </body>

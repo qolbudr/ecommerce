@@ -7,6 +7,7 @@
 
 @theme inline {
   --font-playfair: var(--font-playfair);
+  --font-poppins: var(--font-poppins);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: #41A0E4;
@@ -21,6 +22,7 @@
   --color-neutral-90: #404040;
   --color-success-main: #43936C;
   --color-secondary-main: #FBC037;
+  --color-secondary: #9B9B9B;
   --color-danger-main: #E11428;
   --color-grey: #A19B91;
   --text-m: 14px;
