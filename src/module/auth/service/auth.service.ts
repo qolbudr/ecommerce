@@ -4,8 +4,8 @@ import { User } from "@/shared/types/User";
 import { BaseResponse } from "@/shared/types/BaseResponse";
 import { AxiosError } from "axios";
 
-const register = async (name: string, email: string, password: string, role: string): Promise<User> => {
-    const response = await apiClient.post<BaseResponse<User>>('/auth/register', { name, email, password, role });
+const register = async (nama: string, email: string, telepon: string): Promise<User> => {
+    const response = await apiClient.post<BaseResponse<User>>('/auth/register', { nama, email, telepon });
     const body = response.data;
     return body.data;
 };
