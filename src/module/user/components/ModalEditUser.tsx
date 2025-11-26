@@ -3,15 +3,16 @@ import { Button } from "@/shared/components/Button";
 import { useModalStore } from "@/shared/store/modal.store";
 import { Input } from "@/shared/components/Input";
 
-export const ModalCreateUser = () => {
+export const ModalEditUser = () => {
   const modal = useModalStore();
 
   return (
     <Modal
-      identifier="add-user"
-      title="Tambah User"
+      identifier="edit-user"
+      title="Ubah User"
       cta={[
-        <Button fullWidth={true}>Simpan</Button>
+        <Button variant="outline">Hapus</Button>,
+        <Button>Simpan</Button>
       ]}
     >
       <form className="space-y-4 p-8 font-poppins">

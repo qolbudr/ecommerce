@@ -56,7 +56,7 @@ export const Modal = (props: ModalProps) => {
           {
             props.cta && (
               props.cta.map((action, index) => (
-                <div key={index} className="w-full">
+                <div className={(props.cta?.length ?? 0) < 2 ? "w-full" : ""} key={index}>
                   {action}
                 </div>
               ))

@@ -1,6 +1,7 @@
 'use client';
 
 import { ModalCreateUser } from "@/module/user/components/ModalCreateUser";
+import { ModalEditUser } from "@/module/user/components/ModalEditUser";
 import { UserTable } from "@/module/user/components/UserTable";
 import { Button } from "@/shared/components/Button";
 import { useModalStore } from "@/shared/store/modal.store";
@@ -11,7 +12,7 @@ const AdminUser: React.FC = () => {
     return <>
         <div className="flex justify-between mb-10">
             <h1 className="text-2xl">Dashboard</h1>
-            <Button onClick={() => modal.openModal('create-job')} variant="primary">Tambah User</Button>
+            <Button onClick={() => modal.openModal('edit-user')} variant="primary">Tambah User</Button>
         </div>
         <UserTable
             data={[
@@ -22,7 +23,7 @@ const AdminUser: React.FC = () => {
                     telepon: "08123456789",
                     status: "AKTIF",
                     password: "password123",
-                    role: "ADMIN" 
+                    role: "ADMIN"
                 },
                 {
                     id: "ini-id",
@@ -31,11 +32,12 @@ const AdminUser: React.FC = () => {
                     telepon: "08123456789",
                     status: "AKTIF",
                     password: "password123",
-                    role: "ADMIN" 
+                    role: "ADMIN"
                 }
             ]}
         />
-        <ModalCreateUser/>
+        <ModalCreateUser />
+        <ModalEditUser />
     </>
 }
 
