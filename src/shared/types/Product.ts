@@ -3,4 +3,5 @@ export interface Product {
   nama: string;
   gambar: string;
   harga: number;
+  status: boolean;
 };

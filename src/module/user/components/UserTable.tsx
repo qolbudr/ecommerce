@@ -1,6 +1,6 @@
 'use client'
 
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   ColumnDef,
   flexRender,
@@ -10,18 +10,23 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { User } from "@/shared/types/User";
+import { useUserStore } from "../store/user.store";
+import { Icon } from "@iconify/react";
 
-type Props = {
-  data: User[];
-};
+export const UserTable: React.FC = () => {
+  const store = useUserStore();
 
-export const UserTable: React.FC<Props> = ({ data }) => {
+  useEffect(() => {
+    store.getUsers();
+  }, []);
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const columns: ColumnDef<User>[] = [
     {
       accessorKey: "no",
       header: "No",
+      cell: ({ row }) => row.index + 1,
     },
     {
       accessorKey: "nama",
@@ -42,11 +47,10 @@ export const UserTable: React.FC<Props> = ({ data }) => {
         const status = row.original.status;
         return (
           <span
-            className={`px-4 py-1 rounded-full text-white text-sm ${
-              status === "AKTIF" ? "bg-green-500" : "bg-red-500"
-            }`}
+            className={`px-4 py-1 rounded-full text-white text-sm ${status ? "bg-green-500" : "bg-red-500"
+              }`}
           >
-            {status}
+            {status ? 'AKTIF' : 'TIDAK AKTIF'}
           </span>
         );
       },
@@ -57,10 +61,10 @@ export const UserTable: React.FC<Props> = ({ data }) => {
       cell: () => (
         <div className="flex gap-3">
           <button className="text-green-600">
-            {/* <Eye size={20} /> */}
+            <Icon icon="mdi:eye" className="size-5" />
           </button>
           <button className="text-orange-500">
-            {/* <Pencil size={20} /> */}
+            <Icon icon="mdi:pencil" className="size-5" />
           </button>
         </div>
       ),
@@ -68,7 +72,7 @@ export const UserTable: React.FC<Props> = ({ data }) => {
   ];
 
   const table = useReactTable({
-    data,
+    data: store.users,
     columns,
     state: {
       sorting,
