@@ -46,7 +46,7 @@ export const ModalCreateProduct = () => {
           }
         />
         <Input label="Nama Produk" placeholder="Masukkan nama produk" {...register("nama")} error={errors.nama?.message} />
-        <Input label="Harga" placeholder="Masukkan harga produk" type="number" {...register("harga")} error={errors.harga?.message} />
+        <Input label="Harga" placeholder="Masukkan harga produk" type="number" {...register("harga", {valueAsNumber: true})} error={errors.harga?.message} />
         <RadioSelector
           onChange={(value) => setValue('status', value == 'active' ? true : false)}
           value={watch('status') ? 'active' : 'inactive'}

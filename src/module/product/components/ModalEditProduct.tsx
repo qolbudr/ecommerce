@@ -61,7 +61,7 @@ export const ModalEditProduct = () => {
           }
         />
         <Input label="Nama Produk" {...register('nama')} placeholder="Masukkan nama produk" />
-        <Input label="Harga" placeholder="Masukkan harga produk" type="number" {...register('harga')} />
+        <Input label="Harga" placeholder="Masukkan harga produk" type="number" {...register('harga', {valueAsNumber: true})} />
         <RadioSelector
           onChange={(value) => setValue('status', value == 'active' ? true : false)}
           value={watch('status') ? 'active' : 'inactive'}
